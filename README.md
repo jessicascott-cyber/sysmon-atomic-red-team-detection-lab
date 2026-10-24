@@ -44,10 +44,10 @@ Splunk Universal Forwarder  --(TCP 9997, host-only network)-->  SOC-Splunk (Ubun
 
 | Step | Screenshot |
 | --- | --- |
-| Splunk service running | ![Splunk running](screenshots/01-splunk-service-running.png) |
-| Server has a fixed lab IP | ![Static IP](screenshots/02-splunk-server-static-ip.png) |
-| Forwarder points to the server | ![Forwarder config](screenshots/03-forwarder-points-to-splunk-server.png) |
-| Windows Security events arriving | ![Security events](screenshots/04-windows-security-events-in-splunk.png) |
+| Splunk service running | ![Splunk running](Screenshots/01-splunk-service-running.png) |
+| Server has a fixed lab IP | ![Static IP](Screenshots/02-splunk-server-static-ip.png) |
+| Forwarder points to the server | ![Forwarder config](Screenshots/03-forwarder-points-to-splunk-server.png) |
+| Windows Security events arriving | ![Security events](Screenshots/04-windows-security-events-in-splunk.png) |
 
 ---
 
@@ -64,7 +64,7 @@ Splunk Universal Forwarder  --(TCP 9997, host-only network)-->  SOC-Splunk (Ubun
 - **Fix:** Added the forwarder's service account to the local **Event Log Readers** group, then restarted the forwarder.
 - **Check:** Sysmon events appeared in Splunk.
 
-![Access denied error](screenshots/05-forwarder-sysmon-access-denied-error.png)
+![Access denied error](Screenshots/05-forwarder-sysmon-access-denied-error.png)
 
 ### 3. Splunk trial license expired
 - The Enterprise trial had expired, so I switched the server to the Free license. This is fine for searching, but **the Free license does not support scheduled alerts**, so the detections below are manual searches, not automatic alerts.
@@ -77,8 +77,8 @@ Splunk Universal Forwarder  --(TCP 9997, host-only network)-->  SOC-Splunk (Ubun
 
 **Simulation:** Atomic Red Team test `T1087.001-8` ("Enumerate all accounts on Windows (Local)"), run on SOC-Windows.
 
-![Sysmon installed](screenshots/06-sysmon-installed-and-running.png)
-![Atomic test run](screenshots/08-atomic-red-team-t1087-test-run.png)
+![Sysmon installed](Screenshots/06-sysmon-installed-and-running.png)
+![Atomic test run](Screenshots/08-atomic-red-team-t1087-test-run.png)
 
 ### Search
 
@@ -97,7 +97,7 @@ index=main source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" "<EventI
 
 ### What I found
 
-![Detection in Splunk](screenshots/09-account-discovery-detected-in-splunk.png)
+![Detection in Splunk](Screenshots/09-account-discovery-detected-in-splunk.png)
 
 - Within about one second (01:40:26 to 01:40:27 UTC), Sysmon recorded `whoami`, `net user`, `net localgroup`, `net localgroup "Users"`, and `cmdkey /list`.
 - Those commands were launched by `cmd.exe`, which is how the test script runs them.
@@ -118,7 +118,7 @@ index=main source="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" "<EventI
 
 Sysmon also recorded the permission fix from troubleshooting problem 2 (`net localgroup "Event Log Readers" ... /add`).
 
-![Sysmon admin command](screenshots/07-sysmon-captures-admin-commands-in-splunk.png)
+![Sysmon admin command](Screenshots/07-sysmon-captures-admin-commands-in-splunk.png)
 
 ---
 
